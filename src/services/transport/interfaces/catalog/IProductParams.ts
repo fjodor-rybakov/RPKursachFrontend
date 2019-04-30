@@ -3,4 +3,5 @@ export interface IProductParams {
     Price: number;
     CompanyId: number;
     CategoryId: number;
+    Description: string
 }
