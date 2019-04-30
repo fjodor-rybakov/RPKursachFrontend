@@ -4,10 +4,17 @@ import {EApiRoutes} from "./EApiRoutes";
 import * as config from "../config/config.json";
 import {IRegistrationParams} from "./interfaces/user/IRegistrationParams";
 import {ILoginParams} from "./interfaces/user/ILoginParams";
-import {IResponseLogin} from "./interfaces/user/IResponseLogin";
+import {IToken} from "./interfaces/user/IToken";
 import {IProductParams} from "./interfaces/catalog/IProductParams";
 import {AppContext} from "./AppContext";
 import {IMessage} from "./interfaces/other/IMessage";
+import {BasketProductParams} from "./interfaces/basket/BasketProductParams";
+import {ICompany} from "./interfaces/catalog/ICompany";
+import {ICategory} from "./interfaces/catalog/ICategory";
+import {IUser} from "./interfaces/user/IUser";
+import {IPurchaseHistory} from "./interfaces/user/IPurchaseHistory";
+
+type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 
 export class Transport {
     private readonly client: AxiosInstance;
@@ -19,12 +26,36 @@ export class Transport {
         this.client = axios.create(option);
     }
 
+    // user
+
     public async registration(params: IRegistrationParams): Promise<AxiosResponse<IMessage>> {
         return this.client.post(EApiRoutes.REGISTRATION, params);
     }
 
-    public async login(params: ILoginParams): Promise<AxiosResponse<IResponseLogin>> {
+    public async login(params: ILoginParams): Promise<AxiosResponse<IToken>> {
         return this.client.post(EApiRoutes.LOGIN, params);
+    }
+
+    public async getUserInfo(): Promise<AxiosResponse<IUser>> {
+        return this.client.get(EApiRoutes.USER_INFO, Transport.getHeaderToken());
+    }
+
+    public async getPurchaseHistory(): Promise<AxiosResponse<Omit<IPurchaseHistory, "ProductId" & "UserId">>> {
+        return this.client.get(EApiRoutes.USER_INFO, Transport.getHeaderToken());
+    }
+
+    public async getAllPurchaseHistory(): Promise<AxiosResponse<IPurchaseHistory[]>> {
+        return this.client.get(EApiRoutes.USER_INFO, Transport.getHeaderToken());
+    }
+
+    // catalog
+
+    public async getCompaniesList(): Promise<AxiosResponse<ICompany[]>> {
+        return this.client.get(EApiRoutes.COMPANIES_LIST);
+    }
+
+    public async getCategoriesList(): Promise<AxiosResponse<ICategory[]>> {
+        return this.client.get(EApiRoutes.CATEGORIES_LIST);
     }
 
     public async getProductList(page: number, limit: number): Promise<AxiosResponse<IProduct[]>> {
@@ -44,8 +75,10 @@ export class Transport {
         return this.client.delete(EApiRoutes.PRODUCT.replace(":id", productId.toString()), Transport.getHeaderToken());
     }
 
-    public async addBasketProduct(productId: number): Promise<AxiosResponse<IMessage>> {
-        return this.client.get(EApiRoutes.BASKET.replace(":id", productId.toString()), Transport.getHeaderToken());
+    // basket
+
+    public async addBasketProduct(params: BasketProductParams): Promise<AxiosResponse<IMessage>> {
+        return this.client.post(EApiRoutes.BASKET_PRODUCTS, params, Transport.getHeaderToken());
     }
 
     public async getBasketProductList(): Promise<AxiosResponse<IProduct[]>> {
@@ -54,6 +87,10 @@ export class Transport {
 
     public async deleteBasketProduct(productId: number): Promise<AxiosResponse<IMessage[]>> {
         return this.client.delete(EApiRoutes.BASKET.replace(":id", productId.toString()), Transport.getHeaderToken());
+    }
+
+    public async buyBasketProducts(params: BasketProductParams[]): Promise<AxiosResponse<IMessage[]>> {
+        return this.client.post(EApiRoutes.BUY_PRODUCTS, params, Transport.getHeaderToken());
     }
 
     private static getHeaderToken() {

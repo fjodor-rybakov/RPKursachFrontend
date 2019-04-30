@@ -3,5 +3,6 @@ export interface IProduct {
     CompanyName: string;
     Description: string
     Price: number;
+    Count: number;
     CategoryName: string;
 }
