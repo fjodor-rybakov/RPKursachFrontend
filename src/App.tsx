@@ -21,6 +21,7 @@ class App extends Component {
             ProductName: "New my product",
             Price: 300.5,
             CompanyId: 1,
+            Description: "qweqweqweqweqweqweqwe",
             CategoryId: 1
         });
 
