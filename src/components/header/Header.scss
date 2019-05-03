@@ -1,0 +1,32 @@
+.header {
+  $height: 75px;
+  $mainColor: #a768d5;
+
+  background-color: white;
+  display: flex;
+  height: $height;
+  padding: 15px 40px;
+  align-items: center;
+
+  &__logo {
+    height: $height;
+    width: $height;
+    background: url("./img/logo.png") round;
+  }
+  &__basket {
+    background: $mainColor url("./img/bg_pouch.png") no-repeat center;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  &__link {
+    margin: 0 10px;
+    cursor: pointer;
+    padding: 10px 0;
+    &.active {
+      border-bottom: 2px solid $mainColor;
+    }
+  }
+}

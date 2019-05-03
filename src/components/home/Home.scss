@@ -1,0 +1,30 @@
+.home {
+  &__image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+    margin-bottom: 20px;
+    background: url("./img/img.jpg") center;
+    color: white;
+
+    .text {
+      text-align: center;
+      font-family: 'Signika', sans-serif;
+      font-weight: 600;
+      max-width: 820px;
+
+      &-header {
+        font-size: 60px;
+        text-transform: uppercase;
+        margin: 0;
+        border-bottom: 2px solid;
+        padding: 0 50px;
+      }
+
+      &-description {
+        font-size: 26px;
+      }
+    }
+  }
+}

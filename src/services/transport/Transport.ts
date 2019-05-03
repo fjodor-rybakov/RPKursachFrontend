@@ -13,6 +13,7 @@ import {ICompany} from "./interfaces/catalog/ICompany";
 import {ICategory} from "./interfaces/catalog/ICategory";
 import {IUser} from "./interfaces/user/IUser";
 import {IPurchaseHistory} from "./interfaces/user/IPurchaseHistory";
+import {IProductListResponse} from "./interfaces/catalog/IProductListResponse";
 
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 
@@ -58,7 +59,7 @@ export class Transport {
         return this.client.get(EApiRoutes.CATEGORIES_LIST);
     }
 
-    public async getProductList(page: number, limit: number): Promise<AxiosResponse<IProduct[]>> {
+    public async getProductList(page: number, limit: number): Promise<AxiosResponse<IProductListResponse>> {
         const options = {params: {page, limit}};
         return this.client.get(EApiRoutes.PRODUCTS, options);
     }

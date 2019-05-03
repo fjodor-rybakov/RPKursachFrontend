@@ -1,8 +1,8 @@
 export interface IProduct {
-    ProductName: string;
-    CompanyName: string;
-    Description: string
-    Price: number;
-    Count: number;
-    CategoryName: string;
+    productName: string;
+    companyName: string;
+    description: string
+    price: number;
+    count: number;
+    categoryName: string;
 }
