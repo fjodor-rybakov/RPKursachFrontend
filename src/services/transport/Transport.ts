@@ -59,8 +59,8 @@ export class Transport {
         return this.client.get(EApiRoutes.CATEGORIES_LIST);
     }
 
-    public async getProductList(page: number, limit: number): Promise<AxiosResponse<IProductListResponse>> {
-        const options = {params: {page, limit}};
+    public async getProductList(page: number, limit: number, filter?: string): Promise<AxiosResponse<IProductListResponse>> {
+        const options = {params: {page, limit, filter}};
         return this.client.get(EApiRoutes.PRODUCTS, options);
     }
 
