@@ -28,7 +28,6 @@ export class ProductList extends React.Component {
                 <div className={"container"}>
                     {
                         this.store.products.map((item, index) => {
-                            console.log(item.image);
                             return (
                                 <div className={"product-list__card"} key={index}>
                                     <div className={"card-container"}>
