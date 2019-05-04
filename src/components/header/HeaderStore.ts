@@ -14,25 +14,11 @@ export class HeaderStore {
                 url: "/admin"
             });
         } else {
-            this.links.concat([
-                    {isActive: false, title: "Регистрация", id: "3", url: "/"},
-                    {isActive: false, title: "Вход", id: "4", url: "/"}
-                ]
-            )
+            this.links.push({isActive: false, title: "Регистрация/Вход", id: "3", url: "/login"})
         }
         this.links.forEach(item => {
             item.isActive = item.id === AppContext.getSelectedTab();
         })
-    }
-
-    private onLkClick(url: string, index: number): void {
-        this.links.forEach((item, i) => {
-            if (index !== i) {
-                item.isActive = false;
-                return;
-            }
-            item.isActive = true;
-        });
     }
 
     onItemClick(id: string) {

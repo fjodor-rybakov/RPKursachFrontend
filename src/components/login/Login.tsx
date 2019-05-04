@@ -7,6 +7,9 @@ import {AxiosResponse} from "axios";
 import {observer} from "mobx-react";
 import {IToken} from "../../services/transport/interfaces/user/IToken";
 import {AppContext} from "../../services/transport/AppContext";
+import classNames from "classnames";
+import "./Login.scss";
+import {Redirect} from "react-router";
 
 @autobind
 @observer
@@ -16,21 +19,75 @@ export class Login extends React.Component {
 
     render(): React.ReactNode {
         const text = this.store.isRegistration ? "Зарегетироваться" : "Войти";
+        if (AppContext.isLogin()) {
+            return <Redirect to={"/"}/>
+        }
         return (
             <div className={"login"}>
-                <div onClick={this.store.setRegistration}>Регистрация</div>
-                <div onClick={this.store.setLogin}>Вход</div>
-                <input onChange={this.store.setEmail} placeholder={"email"}/>
+                <div className={"tabs"}>
+                    <div
+                        className={classNames({
+                            "login__tab": true,
+                            active: this.store.isRegistration
+                        })}
+                        onClick={this.store.setRegistration}
+                    >
+                        Регистрация
+                    </div>
+                    <div
+                        className={classNames({
+                            "login__tab": true,
+                            active: !this.store.isRegistration
+                        })}
+                        onClick={this.store.setLogin}
+                    >
+                        Вход
+                    </div>
+                </div>
                 {
-                    this.store.isRegistration
-                        ? <div>
-                            <input onChange={this.store.setFirstName} placeholder={"setFirstName"}/>
-                            <input onChange={this.store.setLastName} placeholder={"setLastName"} />
-                        </div>
-                        : void 0
+                    !this.store.showLoader
+                        ? (
+                            <>
+                                <div className={"login__form"}>
+                                    {
+                                        this.store.isRegistration
+                                            ?
+                                            <div>
+                                                <input
+                                                    className={"input-field"}
+                                                    onChange={this.store.setFirstName}
+                                                    placeholder={"setFirstName"}
+                                                />
+                                                <input
+                                                    className={"input-field"}
+                                                    onChange={this.store.setLastName}
+                                                    placeholder={"setLastName"}
+                                                />
+                                            </div>
+                                            : void 0
+                                    }
+                                    <input className={"input-field"} onChange={this.store.setEmail} placeholder={"email"}/>
+                                    <input
+                                        className={"input-field"}
+                                        type={"password"}
+                                        onChange={this.store.setPassword}
+                                        placeholder={"setPassword"}
+                                    />
+                                </div>
+                                <div className={"button"} onClick={this.onButtonClick}>{text}</div>
+                            </>
+                        )
+                        : (
+                            <div className="container">
+                                <div className="item-1"></div>
+                                <div className="item-2"></div>
+                                <div className="item-3"></div>
+                                <div className="item-4"></div>
+                                <div className="item-5"></div>
+                            </div>
+                        )
+
                 }
-                <input onChange={this.store.setPassword} placeholder={"setPassword"}/>
-                <button onClick={this.onButtonClick}>{text}</button>
             </div>
         )
     }
@@ -50,11 +107,14 @@ export class Login extends React.Component {
     }
 
     private onSuccess(response: AxiosResponse<IMessage>): void {
+        window.location.replace("/");
         console.log(response);
     }
+
     private onSuccessLogin(response: AxiosResponse<IToken>): void {
         console.log(response);
+        this.store.showLoader = true;
         AppContext.setToken(response.data.accessToken);
-        history.replaceState("", "", "/admin");
+        window.location.replace("/admin");
     }
 }

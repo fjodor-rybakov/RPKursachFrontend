@@ -10,6 +10,7 @@ export class LoginStore {
     @observable lastName = "";
     @observable paymentCard = "";
     @observable isRegistration = true;
+    @observable showLoader = false;
 
     setEmail(event: React.ChangeEvent<HTMLInputElement>): void {
         this.email = event.target.value;

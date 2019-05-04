@@ -3,6 +3,7 @@ import "./Header.scss";
 import {HeaderStore} from "./HeaderStore";
 import classnames from "classnames";
 import {observer} from "mobx-react";
+import {AppContext} from "../../services/transport/AppContext";
 
 @observer
 class Header extends Component {
@@ -16,21 +17,26 @@ class Header extends Component {
         return (
             <div className={"header"}>
                 <div className={"header__logo"}/>
+                <div className={"header__tabs"}>
+                    {
+                        this.store.links.map((item, index) => {
+                            return (
+                                <div
+                                    className={classnames({
+                                        "header__link": true,
+                                        "active": item.isActive
+                                    })}
+                                    key={index}
+                                    onClick={() => this.store.onItemClick(item.id)}
+                                >
+                                    {item.title}
+                                </div>
+                            )
+                        })
+                    }
+                </div>
                 {
-                    this.store.links.map((item, index) => {
-                        return (
-                            <div
-                                className={classnames({
-                                    "header__link": true,
-                                    "active": item.isActive
-                                })}
-                                key={index}
-                                onClick={() => this.store.onItemClick(item.id)}
-                            >
-                                {item.title}
-                            </div>
-                        )
-                    })
+                    AppContext.isLogin() ? <div className={"header__logout"}/> : void 0
                 }
                 <div className={"header__basket"}/>
             </div>

@@ -6,6 +6,8 @@ import {SimpleSelect} from "react-selectize";
 import 'react-selectize/themes/index.css';
 import "./AdminTools.scss";
 import {observer} from "mobx-react";
+import {AppContext} from "../../services/transport/AppContext";
+import {Redirect} from "react-router";
 
 @observer
 @autobind
@@ -19,8 +21,12 @@ export class AdminTools extends React.Component {
     }
 
     render(): React.ReactNode {
+        if (!AppContext.isLogin()) {
+            return <Redirect to={"/"}/>
+        }
         return (
             <div className={"admin-tools"}>
+                <h3>Добавить товар</h3>
                 <div className={"image"}/>
                 <div>
                     <input className={"input-field"} placeholder={"Название"} onChange={this.store.onChangeProductName}/>

@@ -3,15 +3,25 @@
   $mainColor: #a768d5;
 
   background-color: white;
-  display: flex;
+  position: relative;
   height: $height;
   padding: 15px 40px;
   align-items: center;
+
+  &__tabs {
+    display: flex;
+    position: absolute;
+    left: 120px;
+    height: $height;
+    align-items: center;
+  }
 
   &__logo {
     height: $height;
     width: $height;
     background: url("./img/logo.png") round;
+    position: absolute;
+    left: 30px;
   }
   &__basket {
     background: $mainColor url("./img/bg_pouch.png") no-repeat center;
@@ -19,6 +29,9 @@
     height: 55px;
     border-radius: 50%;
     cursor: pointer;
+    position: absolute;
+    right: 30px;
+    top: 25px;
   }
 
   &__link {
@@ -28,5 +41,14 @@
     &.active {
       border-bottom: 2px solid $mainColor;
     }
+  }
+
+  &__logout {
+    border-radius: 50%;
+    background: url("/img/logout.png");
+    width: 45px;
+    height: 46px;
+    right: 100px;
+    position: absolute;
   }
 }
