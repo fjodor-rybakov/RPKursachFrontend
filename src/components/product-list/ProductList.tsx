@@ -28,11 +28,12 @@ export class ProductList extends React.Component {
                 <div className={"container"}>
                     {
                         this.store.products.map((item, index) => {
+                            console.log(item.image);
                             return (
                                 <div className={"product-list__card"} key={index}>
                                     <div className={"card-container"}>
                                         <div className={"info-button"}>i</div>
-                                        <img className={"card_img"} src={"http://i.kompiu-pomosch.ru/u/e5/f4eeca8f6d11e5ad3ff5ae86d9d947/-/%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D0%BD%D1%8B%D0%B5%20%D0%BD%D0%B5%D0%B8%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%BD%D0%BE%D1%81%D1%82%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BF%D1%8C%D1%8E%D1%82%D0%B5%D1%80%D0%B0.jpg"}/>
+                                        <img className={"card_img"} src={item.image}/>
                                         <p className={"name"}>{item.productName}</p>
                                         <p className={"price"}>{item.price}p.</p>
                                         <div className={"card-button"}>добавить в корзину</div>

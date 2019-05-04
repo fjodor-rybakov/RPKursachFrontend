@@ -42,11 +42,11 @@ export class Transport {
     }
 
     public async getPurchaseHistory(): Promise<AxiosResponse<Omit<IPurchaseHistory, "ProductId" & "UserId">>> {
-        return this.client.get(EApiRoutes.USER_INFO, Transport.getHeaderToken());
+        return this.client.get(EApiRoutes.USER_PURCHASE_HISTORY, Transport.getHeaderToken());
     }
 
     public async getAllPurchaseHistory(): Promise<AxiosResponse<IPurchaseHistory[]>> {
-        return this.client.get(EApiRoutes.USER_INFO, Transport.getHeaderToken());
+        return this.client.get(EApiRoutes.USER_PURCHASE_HISTORY_ALL, Transport.getHeaderToken());
     }
 
     // catalog
@@ -74,6 +74,10 @@ export class Transport {
 
     public async deleteProduct(productId: number): Promise<AxiosResponse<IMessage>> {
         return this.client.delete(EApiRoutes.PRODUCT.replace(":id", productId.toString()), Transport.getHeaderToken());
+    }
+
+    public async uploadProductImage(params: File, productId: number): Promise<AxiosResponse<IMessage>> {
+        return this.client.post(EApiRoutes.UPLOAD_PRODUCT_IMAGE.replace(":id", productId.toString()), params, Transport.getHeaderToken());
     }
 
     // basket

@@ -3,6 +3,7 @@ export enum EApiRoutes {
     PRODUCT = "/api/catalog/products/:id",
     COMPANIES_LIST = "/api/catalog/companies",
     CATEGORIES_LIST = "/api/catalog/categories",
+    UPLOAD_PRODUCT_IMAGE = "/api/catalog/products/image/:id",
 
     BASKET = "/api/basket/:id",
     BASKET_PRODUCTS = "/api/basket/products",
