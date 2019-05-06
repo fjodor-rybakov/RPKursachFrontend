@@ -1,0 +1,36 @@
+.basket {
+  padding: 50px 10% 0 10%;
+
+  &__line {
+    height: 60px;
+    display: flex;
+    color: #555555;
+    cursor: default;
+
+    &-item {
+      display: flex;
+      flex: 3;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      border-bottom: 1px dotted #c4c4c4;
+      font-size: 18px;
+
+      &.price {
+        flex: 1;
+      }
+    }
+
+    &.b-header {
+      border-top: 1px dotted #c4c4c4;
+      font-family: 'Oswald', sans-serif;
+    }
+  }
+
+  &__price {
+    font-family: 'Oswald', sans-serif;
+    font-size: 24px;
+    float: right;
+    margin-top: 20px;
+  }
+}

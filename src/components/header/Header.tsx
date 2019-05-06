@@ -4,7 +4,9 @@ import {HeaderStore} from "./HeaderStore";
 import classnames from "classnames";
 import {observer} from "mobx-react";
 import {AppContext} from "../../services/transport/AppContext";
+import {autobind} from "core-decorators";
 
+@autobind
 @observer
 class Header extends Component {
     private readonly store = new HeaderStore();
@@ -36,11 +38,21 @@ class Header extends Component {
                     }
                 </div>
                 {
-                    AppContext.isLogin() ? <div className={"header__logout"}/> : void 0
+                    AppContext.isLogin() ? <div className={"header__logout"} onClick={Header.logout}/> : void 0
                 }
-                <div className={"header__basket"}/>
+                <div className={"header__basket"} onClick={Header.redirectToBasket}/>
             </div>
         );
+    }
+
+    private static logout(): void {
+        AppContext.removeToken();
+        window.location.replace("/");
+        AppContext.setSelectedTab("1");
+    }
+
+    private static redirectToBasket(): void {
+        window.location.replace("/basket");
     }
 }
 

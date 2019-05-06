@@ -23,6 +23,7 @@ export class ProductList extends React.Component {
     }
 
     render(): React.ReactNode {
+        const defaultImg = "/files/products/default.jpeg";
         return (
             <div className={"product-list"}>
                 <div className={"container"}>
@@ -32,10 +33,15 @@ export class ProductList extends React.Component {
                                 <div className={"product-list__card"} key={index}>
                                     <div className={"card-container"}>
                                         <div className={"info-button"}>i</div>
-                                        <img className={"card_img"} src={item.image}/>
+                                        <img className={"card_img"} src={item.image || defaultImg}/>
                                         <p className={"name"}>{item.productName}</p>
                                         <p className={"price"}>{item.price}p.</p>
-                                        <div className={"card-button"}>добавить в корзину</div>
+                                        <div
+                                            className={"card-button"}
+                                            onClick={() => this.addProductToBasket(item.id)}
+                                        >
+                                            добавить в корзину
+                                        </div>
                                     </div>
                                 </div>
                             )
@@ -45,5 +51,14 @@ export class ProductList extends React.Component {
                 </div>
             </div>
         )
+    }
+
+    private addProductToBasket(id: number): void {
+        this.transport.addBasketProduct(
+            {
+                ProductId: id,
+                ProductCount: 1
+            }
+        ).then(this.store.onSuccessAddProduct)
     }
 }

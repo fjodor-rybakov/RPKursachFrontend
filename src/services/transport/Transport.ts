@@ -80,8 +80,10 @@ export class Transport {
         return this.client.delete(EApiRoutes.PRODUCT.replace(":id", productId.toString()), Transport.getHeaderToken());
     }
 
-    public async uploadProductImage(params: File, productId: number): Promise<AxiosResponse<IMessage>> {
-        return this.client.post(EApiRoutes.UPLOAD_PRODUCT_IMAGE.replace(":id", productId.toString()), params, Transport.getHeaderToken());
+    public async uploadProductImage(file: File, productId: number): Promise<AxiosResponse<IMessage>> {
+        let formData = new FormData();
+        formData.append('file', file);
+        return this.client.post(EApiRoutes.UPLOAD_PRODUCT_IMAGE.replace(":id", productId.toString()), formData, Transport.getHeaderToken());
     }
 
     // basket

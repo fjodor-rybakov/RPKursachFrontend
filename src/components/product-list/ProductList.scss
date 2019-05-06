@@ -7,14 +7,14 @@
   &__card {
     font-family: 'Oswald', sans-serif;
     border-bottom: 1px dotted #CCC;
-    width: 250px;
+    width: 290px;
     padding: 3px 22px 12px 21px;
     float: left;
 
     .card-container {
       border-right: 1px dotted #c1c0c1;
       padding: 3px 22px 12px 21px;
-      width: 250px;
+      width: 100%;
       color: #555555;
       text-align: center;
       position: relative;
@@ -30,7 +30,7 @@
         line-height: 38px;
         font-size: 24px;
         background: #F0EDED;
-        right: 72px;
+        right: 40px;
         cursor: pointer;
 
         &:hover {
@@ -71,8 +71,8 @@
     }
 
     .card_img {
-      max-width: 170px;
-      height: 260px;
+      max-width: 280px;
+      height: 250px;
     }
   }
 

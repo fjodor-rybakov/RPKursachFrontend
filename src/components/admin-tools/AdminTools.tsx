@@ -8,6 +8,7 @@ import "./AdminTools.scss";
 import {observer} from "mobx-react";
 import {AppContext} from "../../services/transport/AppContext";
 import {Redirect} from "react-router";
+import {isUndefined} from "lodash";
 
 @observer
 @autobind
@@ -27,7 +28,7 @@ export class AdminTools extends React.Component {
         return (
             <div className={"admin-tools"}>
                 <h3>Добавить товар</h3>
-                <div className={"image"}/>
+                <input type={"file"} onChange={this.store.setImage} accept=".jpg, .jpeg, .png"/>
                 <div>
                     <input className={"input-field"} placeholder={"Название"} onChange={this.store.onChangeProductName}/>
                     <textarea className={"input-field"} placeholder={"Описание"} onChange={this.store.onChangeDescription}/>
@@ -60,6 +61,13 @@ export class AdminTools extends React.Component {
             Description: this.store.description,
             CategoryId: this.store.categoryId,
             Count: 1
-        }).then(this.store.onSuccessAddProduct);
+        }).then(this.store.onSuccessAddProduct).then(this.uploadFile);
+    }
+
+    private uploadFile(): void {
+        if (!this.store.file || isUndefined(this.store.productId)) {
+            return;
+        }
+        this.transport.uploadProductImage(this.store.file, this.store.productId).then(this.store.onSuccessUploadImage);
     }
 }

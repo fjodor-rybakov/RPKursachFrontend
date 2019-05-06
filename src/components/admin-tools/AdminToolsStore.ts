@@ -14,6 +14,8 @@ export class AdminToolsStore {
     companyId = -1;
     description = "";
     categoryId = -1;
+    file?: File;
+    productId?: number;
     @observable companyOptions: OptionValue[] = [];
     @observable categoryOptions: OptionValue[] = [];
 
@@ -47,5 +49,18 @@ export class AdminToolsStore {
 
     onSuccessAddProduct(response: AxiosResponse<IMessage>): void {
         console.log("onSuccessAddProduct", response);
+        this.productId = response.data.id;
+    }
+
+    setImage(event: React.ChangeEvent<HTMLInputElement>): void {
+        const files = event.target.files;
+        if (!files) {
+            return;
+        }
+        this.file = files[0];
+    }
+
+    onSuccessUploadImage(): void {
+
     }
 }

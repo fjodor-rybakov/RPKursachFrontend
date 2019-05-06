@@ -45,10 +45,14 @@
 
   &__logout {
     border-radius: 50%;
-    background: url("/img/logout.png");
     width: 45px;
-    height: 46px;
+    height: 45px;
     right: 100px;
     position: absolute;
+    background: lightgray url("./img/logout.png") center;
+    background-size: 30px 30px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    top: 30px;
   }
 }

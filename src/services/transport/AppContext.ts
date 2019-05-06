@@ -23,4 +23,8 @@ export class AppContext {
     public static getSelectedTab(): string {
         return localStorage.getItem(AppContext.tabName) || "";
     }
+
+    public static removeToken(): void {
+        localStorage.removeItem(AppContext.tokenName);
+    }
 }
