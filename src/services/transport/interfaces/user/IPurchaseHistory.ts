@@ -1,4 +1,5 @@
 export interface IPurchaseHistory {
+    Id: number;
     ProductId: number;
     UserId: number;
     ProductCount: number;

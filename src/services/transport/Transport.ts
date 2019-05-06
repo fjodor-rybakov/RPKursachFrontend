@@ -41,12 +41,16 @@ export class Transport {
         return this.client.get(EApiRoutes.USER_INFO, Transport.getHeaderToken());
     }
 
-    public async getPurchaseHistory(): Promise<AxiosResponse<Omit<IPurchaseHistory, "ProductId" & "UserId">>> {
+    public async getPurchaseHistory(): Promise<AxiosResponse<Omit<IPurchaseHistory, "ProductId" & "UserId" & "Id">>> {
         return this.client.get(EApiRoutes.USER_PURCHASE_HISTORY, Transport.getHeaderToken());
     }
 
     public async getAllPurchaseHistory(): Promise<AxiosResponse<IPurchaseHistory[]>> {
-        return this.client.get(EApiRoutes.USER_PURCHASE_HISTORY_ALL, Transport.getHeaderToken());
+        return this.client.get(EApiRoutes.PURCHASE_HISTORY_ALL, Transport.getHeaderToken());
+    }
+
+    public async cancelOrder(orderId: number): Promise<AxiosResponse<IMessage>> {
+        return this.client.delete(EApiRoutes.PURCHASE_HISTORY.replace(":id", orderId.toString()), Transport.getHeaderToken());
     }
 
     // catalog

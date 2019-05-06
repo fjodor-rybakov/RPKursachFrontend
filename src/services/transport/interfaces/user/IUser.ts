@@ -1,6 +1,7 @@
 export interface IUser {
-    Email: string;
-    FirstName: string;
-    LastName: string;
-    PaymentCard: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    roleId: string;
+    paymentCard: string;
 }
