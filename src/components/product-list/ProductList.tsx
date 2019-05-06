@@ -3,9 +3,9 @@ import {ProductListStore} from "./ProductListStore";
 import {autobind} from "core-decorators";
 import {observer} from "mobx-react";
 import {Transport} from "../../services/transport/Transport";
-import {IProduct} from "../../services/transport/interfaces/catalog/IProduct";
 import {AxiosResponse} from "axios";
 import {IProductListResponse} from "../../services/transport/interfaces/catalog/IProductListResponse";
+import defaultImgPc from "./img/default_img_pc.png";
 import "./ProductList.scss";
 
 @autobind
@@ -23,7 +23,6 @@ export class ProductList extends React.Component {
     }
 
     render(): React.ReactNode {
-        const defaultImg = "/files/products/default.jpeg";
         return (
             <div className={"product-list"}>
                 <div className={"container"}>
@@ -33,7 +32,7 @@ export class ProductList extends React.Component {
                                 <div className={"product-list__card"} key={index}>
                                     <div className={"card-container"}>
                                         <div className={"info-button"}>i</div>
-                                        <img className={"card_img"} src={item.image || defaultImg}/>
+                                        <img className={"card_img"} src={item.image || defaultImgPc} alt={"pc_image"}/>
                                         <p className={"name"}>{item.productName}</p>
                                         <p className={"price"}>{item.price}p.</p>
                                         <div
