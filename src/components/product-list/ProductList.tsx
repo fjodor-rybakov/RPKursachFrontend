@@ -76,11 +76,28 @@ export class ProductList extends React.Component {
                 </div>
                 {
                     this.store.isEditWindowVisible
-                        ? <EditItem product={this.store.products[this.store.editableIndex]}/>
+                        ? <EditItem
+                            product={this.store.products[this.store.editableIndex]}
+                            onClose={this.onClose}
+                            onUpdate={this.onUpdate}
+                        />
                         : void 0
+                }
+                {
+                    this.store.isPopupShown ? <div className={"popup"}>Продукт успешно обновлен</div> : void 0
                 }
             </div>
         )
+    }
+
+    private onClose(): void {
+        this.store.isEditWindowVisible = false;
+    }
+
+    private onUpdate(): void {
+        this.store.isPopupShown = true;
+        this.store.isEditWindowVisible = false;
+        setTimeout(()=> this.store.isPopupShown = false, 3000)
     }
 
     private onClickEditIcon(index: number) {

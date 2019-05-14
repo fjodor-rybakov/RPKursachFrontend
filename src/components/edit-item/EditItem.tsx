@@ -8,6 +8,8 @@ import {autobind} from "core-decorators";
 import {observer} from "mobx-react";
 import {isUndefined} from "lodash";
 import {observable} from "mobx";
+import {IMessage} from "../../services/transport/interfaces/other/IMessage";
+import {AxiosResponse} from "axios";
 
 @autobind
 @observer
@@ -76,7 +78,7 @@ export class EditItem extends React.Component<IEditItemProps> {
                         />
                         <div className={"button"} onClick={this.updateProduct}>клик</div>
                     </div>
-                    <div className={"close-icon"}/>
+                    <div className={"close"} onClick={this.props.onClose}>x</div>
                 </div>
             </div>
         )
@@ -129,10 +131,15 @@ export class EditItem extends React.Component<IEditItemProps> {
             Description: this.store.description,
             CategoryId: this.store.categoryId,
             Count: +this.store.count
-        }, this.store.productId).then(this.store.onSuccessAddProduct).then(this.uploadFile);
+        }, this.store.productId).then(this.onSuccessAddProduct).then(this.uploadFile);
     }
 
+    private onSuccessAddProduct(response: AxiosResponse<IMessage>): void {
+        this.store.onSuccessAddProduct(response);
+        this.props.onUpdate();
+    }
     private uploadFile(): void {
+        console.log("12112")
         if (!this.store.file || isUndefined(this.store.productId)) {
             return;
         }

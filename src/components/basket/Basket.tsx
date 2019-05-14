@@ -29,6 +29,7 @@ export class Basket extends React.Component {
         return (
             <div className={"basket"}>
                 <div className={"basket__line b-header"}>
+                    <div className={"basket__line-item photo"}> </div>
                     <div className={"basket__line-item name"}>Товар</div>
                     <div className={"basket__line-item count"}>Количество</div>
                     <div className={"basket__line-item price"}>Цена</div>
@@ -38,6 +39,9 @@ export class Basket extends React.Component {
                         return (
                             <div key={uuid4()} className={"basket__line"}>
                                 <div className={"remove-button"} onClick={() => this.onClickRemoveIcon(item.id)}/>
+                                <div className={"basket__line-item photo"}>
+                                    <img className={"img"} src={item.image}/>
+                                </div>
                                 <div className={"basket__line-item name"}>{item.productName}</div>
                                 <div className={"basket__line-item count"}>{item.productCount}</div>
                                 <div className={"basket__line-item price"}>{item.price}</div>

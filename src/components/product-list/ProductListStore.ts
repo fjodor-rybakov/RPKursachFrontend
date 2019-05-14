@@ -12,6 +12,7 @@ export class ProductListStore {
     @observable productsCount: Map<number, number> = new Map();
     @observable editableIndex = -1;
     @observable isEditWindowVisible = false;
+    @observable isPopupShown = false;
 
     onSuccessAddProduct(response: AxiosResponse<IMessage>): void {
         console.log("onSuccessAddProduct", response);

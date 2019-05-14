@@ -47,7 +47,7 @@ export class Transport {
         return this.backendApiClient.get(EApiRoutes.USER_INFO, Transport.getHeaderToken());
     }
 
-    public async getPurchaseHistory(): Promise<AxiosResponse<Omit<IPurchaseHistory, "ProductId" & "UserId" & "Id">>> {
+    public async getPurchaseHistory(): Promise<AxiosResponse<IPurchaseUserHistory[]>> {
         return this.backendApiClient.get(EApiRoutes.USER_PURCHASE_HISTORY, Transport.getHeaderToken());
     }
 

@@ -3,8 +3,7 @@
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: gray;
-  //opacity: 0.5;
+  background: rgba(211,211,211, 0.8);
   top: 0;
 
   &__form {
@@ -18,6 +17,7 @@
     border: 1px silver solid;
     width: 400px;
     height: 500px;
+    position: relative;
   }
 
   .input-field {
@@ -33,5 +33,20 @@
     color: #555555;
     font-size: 16px;
     margin-top: 20px;
+  }
+
+  .close {
+    width: 20px;
+    height: 17px;
+    padding-bottom: 4px;
+    border: 1px solid lightgrey;
+    border-radius: 4px;
+    cursor: pointer;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }

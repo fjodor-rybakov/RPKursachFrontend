@@ -24,7 +24,7 @@
   }
 
   &__line {
-    height: 60px;
+    min-height: 60px;
     display: flex;
     color: #555555;
     cursor: default;
@@ -45,12 +45,19 @@
       }
 
       &.name {
-        padding-left: 70px;
         text-align: center;
       }
 
       &.count {
         flex: 1;
+      }
+
+      &.photo {
+        flex: 2;
+        padding: 10px 0 10px 70px;
+        .img {
+          max-width: 200px;
+        }
       }
     }
 
