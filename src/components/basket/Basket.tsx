@@ -6,6 +6,7 @@ import {autobind} from "core-decorators";
 import {observer} from "mobx-react";
 import uuid4 from "uuid/v4";
 import "./Basket.scss";
+import {isUndefined} from "lodash";
 
 @autobind
 @observer
@@ -38,7 +39,7 @@ export class Basket extends React.Component {
                     this.store.products.map((item) => {
                         return (
                             <div key={uuid4()} className={"basket__line"}>
-                                <div className={"remove-button"} onClick={() => this.onClickRemoveIcon(item.id)}/>
+                                <div className={"remove-button"} onClick={() => this.onClickRemoveIcon(item.productId)}/>
                                 <div className={"basket__line-item photo"}>
                                     <img className={"img"} src={item.image}/>
                                 </div>
@@ -59,10 +60,14 @@ export class Basket extends React.Component {
     }
 
     private onSubmit(): void {
-        this.transport.buyBasketProducts([]).then(this.store.onSuccess)
+        const res = this.store.products.map(item => {return {ProductId: item.productId!, ProductCount: item.productCount!}})
+        this.transport.buyBasketProducts(res).then(this.store.onSuccess)
     }
 
-    private onClickRemoveIcon(id: number): void {
+    private onClickRemoveIcon(id?: number): void {
+        if (isUndefined(id)) {
+            return
+        }
         this.transport.deleteBasketProduct(id).then(this.getList);
     }
 }

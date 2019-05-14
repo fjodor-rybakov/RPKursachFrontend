@@ -7,5 +7,6 @@ export interface IProduct {
     productCount?: number;
     categoryName: string;
     image: string;
-    id: number;
+    productId?: number;
+    id?: number;
 }

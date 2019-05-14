@@ -131,18 +131,18 @@ export class EditItem extends React.Component<IEditItemProps> {
             Description: this.store.description,
             CategoryId: this.store.categoryId,
             Count: +this.store.count
-        }, this.store.productId).then(this.onSuccessAddProduct).then(this.uploadFile);
+        }, this.store.productId).then(this.uploadFile);
     }
 
-    private onSuccessAddProduct(response: AxiosResponse<IMessage>): void {
-        this.store.onSuccessAddProduct(response);
-        this.props.onUpdate();
-    }
     private uploadFile(): void {
-        console.log("12112")
         if (!this.store.file || isUndefined(this.store.productId)) {
+            this.props.onUpdate();
             return;
         }
-        this.transport.uploadProductImage(this.store.file, this.store.productId).then(this.store.onSuccessUploadImage);
+        this.transport.uploadProductImage(this.store.file, this.store.productId).then(this.onSuccessUploadImage);
+    }
+
+    private onSuccessUploadImage(): void {
+        this.props.onUpdate();
     }
 }

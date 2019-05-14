@@ -7,6 +7,7 @@ import defaultImgPc from "./img/default_img_pc.png";
 import "./ProductList.scss";
 import {AppContext} from "../../services/transport/AppContext";
 import {EditItem} from "../edit-item/EditItem";
+import {isUndefined} from "lodash";
 
 @autobind
 @observer
@@ -55,7 +56,7 @@ export class ProductList extends React.Component {
                                         <p className={"price"}>{item.price}p.</p>
                                         <div
                                             className={"card-button"}
-                                            onClick={() => this.addProductToBasket(item.id, index)}
+                                            onClick={() => this.addProductToBasket(index, item.id)}
                                         >
                                             добавить в корзину
                                         </div>
@@ -97,7 +98,8 @@ export class ProductList extends React.Component {
     private onUpdate(): void {
         this.store.isPopupShown = true;
         this.store.isEditWindowVisible = false;
-        setTimeout(()=> this.store.isPopupShown = false, 3000)
+        setTimeout(()=> this.store.isPopupShown = false, 3000);
+        this.getProductList()
     }
 
     private onClickEditIcon(index: number) {
@@ -105,11 +107,17 @@ export class ProductList extends React.Component {
         this.store.isEditWindowVisible = true;
     }
 
-    private onClickRemoveIcon(id: number): void {
+    private onClickRemoveIcon(id?: number): void {
+        if (isUndefined(id)) {
+            return;
+        }
         this.transport.deleteProduct(id).then(this.store.onSuccessDelete).then(this.getProductList);
     }
 
-    private addProductToBasket(id: number, index: number): void {
+    private addProductToBasket(index: number, id?: number): void {
+        if (isUndefined(id)) {
+            return;
+        }
         this.transport.addBasketProduct(
             {
                 ProductId: id,
