@@ -1,5 +1,6 @@
 {
   "server": {
-    "url": "http://localhost:3001"
+    "backendApiUrl": "http://localhost:3001",
+    "showcaseApiUrl": "http://localhost:3002"
   }
 }
