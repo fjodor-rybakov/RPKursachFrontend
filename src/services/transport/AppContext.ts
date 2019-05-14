@@ -3,6 +3,16 @@ import {isEmpty} from "lodash";
 export class AppContext {
     private static readonly tokenName = "AccessToken";
     private static readonly tabName = "Tab";
+    private static isAdminName = "isAdmin";
+
+    public static isAdmin(): boolean {
+        const res = localStorage.getItem(AppContext.isAdminName);
+        return res === "true";
+    }
+
+    public static setIsAdmin(value: boolean) {
+        localStorage.setItem(AppContext.isAdminName, value.toString());
+    }
 
     public static getToken(): string | null {
         return localStorage.getItem(AppContext.tokenName);

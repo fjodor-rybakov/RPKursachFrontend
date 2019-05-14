@@ -14,6 +14,7 @@ import {ICategory} from "./interfaces/catalog/ICategory";
 import {IUser} from "./interfaces/user/IUser";
 import {IPurchaseHistory} from "./interfaces/user/IPurchaseHistory";
 import {IProductListResponse} from "./interfaces/catalog/IProductListResponse";
+import {IPurchaseUserHistory} from "./interfaces/user/IPurchaseUserHistory";
 
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 
@@ -41,7 +42,7 @@ export class Transport {
         return this.client.get(EApiRoutes.USER_INFO, Transport.getHeaderToken());
     }
 
-    public async getPurchaseHistory(): Promise<AxiosResponse<Omit<IPurchaseHistory, "ProductId" & "UserId" & "Id">>> {
+    public async getPurchaseHistory(): Promise<AxiosResponse<IPurchaseUserHistory[]>> {
         return this.client.get(EApiRoutes.USER_PURCHASE_HISTORY, Transport.getHeaderToken());
     }
 

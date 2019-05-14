@@ -1,11 +1,36 @@
 .basket {
   padding: 50px 10% 0 10%;
 
+  &__button {
+    width: 150px;
+    height: 40px;
+    border-radius: 6px;
+    background-color: #a768d5;
+    cursor: pointer;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    margin-top: 10px;
+
+    &:hover {
+      background: #333333;
+    }
+  }
+
+  .clear {
+    clear: both;
+  }
+
   &__line {
     height: 60px;
     display: flex;
     color: #555555;
     cursor: default;
+    align-items: center;
+    border-bottom: 1px dotted #c4c4c4;
+    position: relative;
 
     &-item {
       display: flex;
@@ -13,12 +38,29 @@
       align-items: center;
       justify-content: center;
       height: 100%;
-      border-bottom: 1px dotted #c4c4c4;
       font-size: 18px;
 
       &.price {
         flex: 1;
       }
+
+      &.name {
+        padding-left: 70px;
+        text-align: center;
+      }
+
+      &.count {
+        flex: 1;
+      }
+    }
+
+    .remove-button {
+      width: 20px;
+      height: 20px;
+      background: url("./img/remove-icon.png") round center;
+      cursor: pointer;
+      position: absolute;
+      left: 30px;
     }
 
     &.b-header {
@@ -32,5 +74,6 @@
     font-size: 24px;
     float: right;
     margin-top: 20px;
+    text-align: center;
   }
 }

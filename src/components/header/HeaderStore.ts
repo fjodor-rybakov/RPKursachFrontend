@@ -11,7 +11,7 @@ export class HeaderStore {
                 isActive: false,
                 title: "Личный кабинет",
                 id: "2",
-                url: "/admin"
+                url: "/dashboard"
             });
         } else {
             this.links.push({isActive: false, title: "Регистрация/Вход", id: "3", url: "/login"})

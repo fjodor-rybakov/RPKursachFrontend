@@ -16,7 +16,15 @@ export class BasketStore {
 
     updateGeneralPrice(): void {
         this.generalPrice = 0;
-        this.products.forEach(item => this.generalPrice += item.price)
+        this.products.forEach(item => this.generalPrice += item.price * (item.productCount || 1))
+    }
+
+    onSuccessDelete(): void {
+
+    }
+
+    onSuccess(): void {
+
     }
 
     getFormattedPrice(): string {
@@ -24,9 +32,9 @@ export class BasketStore {
         let formatted = [];
         let k = 0;
         for (let i = 0; i < price.length; i++) {
-            if (k === 3 && i !== price.length) {
+            if (k === 3) {
                 formatted.push(" ");
-                k = 0;
+                k = 1;
             } else {
                 k++;
             }

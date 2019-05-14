@@ -8,6 +8,7 @@ import {Header} from "./components/header";
 import {AdminTools} from "./components/admin-tools/AdminTools";
 import {Home} from "./components/home";
 import {Basket} from "./components/basket";
+import {Dashboard} from "./components/dashboard/Dashboard";
 
 @autobind
 class App extends Component {
@@ -20,7 +21,7 @@ class App extends Component {
                     <Header />
                     <Route exact path="/" component={Home} />
                     <Route exact path="/login" component={Login} />
-                    <Route exact path="/admin" component={AdminTools} />
+                    <Route exact path="/dashboard" component={Dashboard} />
                     <Route exact path="/basket" component={Basket} />
                 </div>
             </BrowserRouter>

@@ -33,6 +33,7 @@ export class AdminTools extends React.Component {
                     <input className={"input-field"} placeholder={"Название"} onChange={this.store.onChangeProductName}/>
                     <textarea className={"input-field"} placeholder={"Описание"} onChange={this.store.onChangeDescription}/>
                     <input className={"input-field"} placeholder={"Цена"} onChange={this.store.onChangePrice}/>
+                    <input className={"input-field"} placeholder={"Количество"} onChange={this.store.onChangeCount}/>
                     <SimpleSelect
                         options={this.store.companyOptions}
                         placeholder="Выберете компанию"
@@ -60,7 +61,7 @@ export class AdminTools extends React.Component {
             CompanyId: this.store.companyId,
             Description: this.store.description,
             CategoryId: this.store.categoryId,
-            Count: 1
+            Count: +this.store.count
         }).then(this.store.onSuccessAddProduct).then(this.uploadFile);
     }
 

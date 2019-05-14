@@ -18,6 +18,10 @@ export class Basket extends React.Component {
     }
 
     componentDidMount(): void {
+        this.getList();
+    }
+
+    private getList(): void {
         this.transport.getBasketProductList().then(this.store.onSuccessGetList)
     }
 
@@ -25,21 +29,36 @@ export class Basket extends React.Component {
         return (
             <div className={"basket"}>
                 <div className={"basket__line b-header"}>
-                    <div className={"basket__line-item"}>Товар</div>
+                    <div className={"basket__line-item name"}>Товар</div>
+                    <div className={"basket__line-item count"}>Количество</div>
                     <div className={"basket__line-item price"}>Цена</div>
                 </div>
                 {
                     this.store.products.map((item) => {
                         return (
                             <div key={uuid4()} className={"basket__line"}>
-                                <div className={"basket__line-item"}>{item.productName}</div>
+                                <div className={"remove-button"} onClick={() => this.onClickRemoveIcon(item.id)}/>
+                                <div className={"basket__line-item name"}>{item.productName}</div>
+                                <div className={"basket__line-item count"}>{item.productCount}</div>
                                 <div className={"basket__line-item price"}>{item.price}</div>
                             </div>
                         )
                     })
                 }
-                <div className={"basket__price"}>{this.store.getFormattedPrice()}₽</div>
+                <div className={"basket__price"}>
+                    {this.store.getFormattedPrice()}₽
+                    <div className={"basket__button"} onClick={this.onSubmit}>Купить</div>
+                </div>
+                <div className={"clear"}/>
             </div>
         )
+    }
+
+    private onSubmit(): void {
+        this.transport.buyBasketProducts([]).then(this.store.onSuccess)
+    }
+
+    private onClickRemoveIcon(id: number): void {
+        this.transport.deleteBasketProduct(id).then(this.getList);
     }
 }

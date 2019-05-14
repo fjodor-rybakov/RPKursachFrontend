@@ -3,10 +3,10 @@ import {ProductListStore} from "./ProductListStore";
 import {autobind} from "core-decorators";
 import {observer} from "mobx-react";
 import {Transport} from "../../services/transport/Transport";
-import {AxiosResponse} from "axios";
-import {IProductListResponse} from "../../services/transport/interfaces/catalog/IProductListResponse";
 import defaultImgPc from "./img/default_img_pc.png";
 import "./ProductList.scss";
+import {AppContext} from "../../services/transport/AppContext";
+import {EditItem} from "../edit-item/EditItem";
 
 @autobind
 @observer
@@ -15,11 +15,11 @@ export class ProductList extends React.Component {
     private transport = new Transport();
 
     componentDidMount(): void {
-        this.transport.getProductList(0, 10).then(this.onSuccessGetProductList);
+        this.getProductList();
     }
 
-    private onSuccessGetProductList(result: AxiosResponse<IProductListResponse>): void {
-        this.store.products = result.data.data;
+    private getProductList(): void {
+        this.transport.getProductList(0, 10).then(this.store.onSuccessGetProductList);
     }
 
     render(): React.ReactNode {
@@ -31,16 +31,42 @@ export class ProductList extends React.Component {
                             return (
                                 <div className={"product-list__card"} key={index}>
                                     <div className={"card-container"}>
-                                        <div className={"info-button"}>i</div>
+                                        {
+                                            AppContext.isAdmin()
+                                                ?
+                                                <div className={"admin"}>
+                                                    <div
+                                                        className={"remove-icon"}
+                                                        onClick={() => this.onClickRemoveIcon(item.id)}
+                                                    />
+                                                    <div
+                                                        className={"edit-icon"}
+                                                        onClick={() => this.onClickEditIcon(index)}
+                                                    />
+                                                </div>
+                                                : void 0
+                                        }
+                                        <div className={"info"}>
+                                            <div className={"description"}>{item.description}</div>
+                                            <div className={"info-button"}>i</div>
+                                        </div>
                                         <img className={"card_img"} src={item.image || defaultImgPc} alt={"pc_image"}/>
                                         <p className={"name"}>{item.productName}</p>
                                         <p className={"price"}>{item.price}p.</p>
                                         <div
                                             className={"card-button"}
-                                            onClick={() => this.addProductToBasket(item.id)}
+                                            onClick={() => this.addProductToBasket(item.id, index)}
                                         >
                                             добавить в корзину
                                         </div>
+                                        <input
+                                            className={"count"}
+                                            value={this.store.productsCount.get(index) || 0}
+                                            onChange={(
+                                                event: React.ChangeEvent<HTMLInputElement>
+                                            ) => this.store.onChangeCount(event, index)}
+                                        />
+                                        <span>max: {item.count}</span>
                                     </div>
                                 </div>
                             )
@@ -48,16 +74,30 @@ export class ProductList extends React.Component {
                     }
                     <div className={"clear"}/>
                 </div>
+                {
+                    this.store.isEditWindowVisible
+                        ? <EditItem product={this.store.products[this.store.editableIndex]}/>
+                        : void 0
+                }
             </div>
         )
     }
 
-    private addProductToBasket(id: number): void {
+    private onClickEditIcon(index: number) {
+        this.store.editableIndex = index;
+        this.store.isEditWindowVisible = true;
+    }
+
+    private onClickRemoveIcon(id: number): void {
+        this.transport.deleteProduct(id).then(this.store.onSuccessDelete).then(this.getProductList);
+    }
+
+    private addProductToBasket(id: number, index: number): void {
         this.transport.addBasketProduct(
             {
                 ProductId: id,
-                ProductCount: 1
+                ProductCount: this.store.productsCount.get(index) || 0
             }
-        ).then(this.store.onSuccessAddProduct)
+        ).then(this.store.onSuccessAddProduct);
     }
 }

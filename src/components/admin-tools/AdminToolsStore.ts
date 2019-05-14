@@ -6,18 +6,21 @@ import {observable} from "mobx";
 import {autobind} from "core-decorators";
 import {ICategory} from "../../services/transport/interfaces/catalog/ICategory";
 import {IMessage} from "../../services/transport/interfaces/other/IMessage";
+import { Subject } from "rxjs";
 
 @autobind
 export class AdminToolsStore {
-    productName = "";
-    price = "";
-    companyId = -1;
-    description = "";
-    categoryId = -1;
+    @observable productName = "";
+    @observable price = "";
+    @observable companyId = -1;
+    @observable description = "";
+    @observable categoryId = -1;
     file?: File;
     productId?: number;
+    @observable count = "";
     @observable companyOptions: OptionValue[] = [];
     @observable categoryOptions: OptionValue[] = [];
+    readonly getList$ = new Subject<string>();
 
     onChangeCompany(value: OptionValue): void {
         this.companyId = value.value;
@@ -27,24 +30,34 @@ export class AdminToolsStore {
         this.categoryId = value.value;
     }
 
-    onChangeDescription(event: React.ChangeEvent<HTMLTextAreaElement>): void {
+    onChangeDescription(event: React.ChangeEvent<HTMLTextAreaElement>): void {
         this.description = event.target.value;
     }
 
-    onChangePrice(event: React.ChangeEvent<HTMLInputElement>): void {
+    onChangePrice(event: React.ChangeEvent<HTMLInputElement>): void {
         this.price = event.target.value;
     }
 
-    onChangeProductName(event: React.ChangeEvent<HTMLInputElement>): void {
+    onChangeCount(event: React.ChangeEvent<HTMLInputElement>): void {
+        this.count = event.target.value;
+    }
+
+    onChangeProductName(event: React.ChangeEvent<HTMLInputElement>): void {
         this.productName = event.target.value;
     }
 
     onSuccessGetCompaniesList(response: AxiosResponse<ICompany[]>): void {
-        this.companyOptions = response.data.map(item => {return {label: item.companyName, value: item.id}})
+        this.companyOptions = response.data.map(item => {
+            return {label: item.companyName, value: item.id}
+        });
+        this.getList$.next("company");
     }
 
     onSuccessGetCategoriesList(response: AxiosResponse<ICategory[]>): void {
-        this.categoryOptions = response.data.map(item => {return {label: item.categoryName, value: item.id}})
+        this.categoryOptions = response.data.map(item => {
+            return {label: item.categoryName, value: item.id}
+        });
+        this.getList$.next("category");
     }
 
     onSuccessAddProduct(response: AxiosResponse<IMessage>): void {
@@ -52,7 +65,7 @@ export class AdminToolsStore {
         this.productId = response.data.id;
     }
 
-    setImage(event: React.ChangeEvent<HTMLInputElement>): void {
+    setImage(event: React.ChangeEvent<HTMLInputElement>): void {
         const files = event.target.files;
         if (!files) {
             return;

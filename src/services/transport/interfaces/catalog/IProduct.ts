@@ -3,7 +3,8 @@ export interface IProduct {
     companyName: string;
     description: string
     price: number;
-    count: number;
+    count?: number;
+    productCount?: number;
     categoryName: string;
     image: string;
     id: number;

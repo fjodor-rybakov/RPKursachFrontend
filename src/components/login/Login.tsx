@@ -10,6 +10,7 @@ import {AppContext} from "../../services/transport/AppContext";
 import classNames from "classnames";
 import "./Login.scss";
 import {Redirect} from "react-router";
+import {IUser} from "../../services/transport/interfaces/user/IUser";
 
 @autobind
 @observer
@@ -103,6 +104,7 @@ export class Login extends React.Component {
             }).then(this.onSuccess);
             return;
         }
+        this.store.showLoader = true;
         this.transport.login({Email: this.store.email, Password: this.store.password}).then(this.onSuccessLogin)
     }
 
@@ -112,9 +114,15 @@ export class Login extends React.Component {
     }
 
     private onSuccessLogin(response: AxiosResponse<IToken>): void {
-        console.log(response);
-        this.store.showLoader = true;
+        console.log("onSuccessLogin", response);
         AppContext.setToken(response.data.accessToken);
-        window.location.replace("/admin");
+        this.transport.getUserInfo().then(this.onSuccessGetInfo);
+    }
+
+    private onSuccessGetInfo(response: AxiosResponse<IUser>): void {
+        console.log("onSuccessGetInfo", response);
+        console.log(response.data.roleId === 1)
+        AppContext.setIsAdmin(response.data.roleId === 1);
+        window.location.replace("/dashboard");
     }
 }
