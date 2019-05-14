@@ -1,9 +1,9 @@
 export interface IPurchaseHistory {
-    Id: number;
-    ProductId: number;
-    UserId: number;
-    ProductCount: number;
-    Price: number;
-    ProductName: string;
-    Description: string;
+    id: number;
+    productId: number;
+    userId: number;
+    productCount: number;
+    price: number;
+    productName: string;
+    description: string;
 }

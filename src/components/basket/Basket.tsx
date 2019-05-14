@@ -61,7 +61,7 @@ export class Basket extends React.Component {
 
     private onSubmit(): void {
         const res = this.store.products.map(item => {return {ProductId: item.productId!, ProductCount: item.productCount!}})
-        this.transport.buyBasketProducts(res).then(this.store.onSuccess)
+        this.transport.buyBasketProducts(res).then(this.store.onSuccess).then(this.getList)
     }
 
     private onClickRemoveIcon(id?: number): void {

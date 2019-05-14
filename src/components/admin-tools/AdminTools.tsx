@@ -19,6 +19,11 @@ export class AdminTools extends React.Component {
     componentDidMount(): void {
         this.transport.getCompaniesList().then(this.store.onSuccessGetCompaniesList);
         this.transport.getCategoriesList().then(this.store.onSuccessGetCategoriesList);
+        this.getHistory();
+    }
+
+    private getHistory(): void {
+        this.transport.getAllPurchaseHistory().then(this.store.onSuccessGetAllPurchaseHistory);
     }
 
     render(): React.ReactNode {
@@ -50,11 +55,29 @@ export class AdminTools extends React.Component {
                     />
                     <div className={"button"} onClick={this.addProduct}>клик</div>
                 </div>
+
+                <h3>История</h3>
+                {
+                    this.store.purchaseHistory.map((item, index) => {
+                        return (
+                            <div key={index}>
+                                <span>Название: {item.productName} | </span>
+                                <span>Цена: {item.price} | </span>
+                                <span>Количество: {item.productCount} | </span>
+                                <span className={"cancel"} onClick={() => this.cancelOrder(item.id)}>отменить</span>
+                            </div>
+                        )
+                    })
+                }
             </div>
         )
     }
 
-    private async addProduct() {
+    private cancelOrder(id: number): void {
+        this.transport.cancelOrder(id).then(this.store.onSuccessCancelOrder).then(this.getHistory)
+    }
+
+    private addProduct() {
         this.transport.addNewProduct({
             ProductName: this.store.productName,
             Price: +this.store.price,

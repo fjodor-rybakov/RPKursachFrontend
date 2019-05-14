@@ -14,5 +14,5 @@ export enum EApiRoutes {
     USER_INFO = "/api/user",
     USER_PURCHASE_HISTORY = "/api/user/history",
     PURCHASE_HISTORY_ALL = "/api/user/history/all",
-    PURCHASE_HISTORY = "/api/user/history/{id}",
+    PURCHASE_HISTORY = "/api/user/history/:id",
 }

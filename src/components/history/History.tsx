@@ -24,10 +24,12 @@ export class History extends React.Component {
                 <h3>История покупок</h3>
                 <div className={"history__list"}>
                     {
-                        this.store.productList.map(item => {
+                        this.store.productList.map((item, index) => {
                             return (
-                                <div>
-                                    {item.ProductName}
+                                <div key={index}>
+                                    <span>Название: {item.productName} | </span>
+                                    <span>Цена: {item.price} | </span>
+                                    <span>Количество: {item.productCount} </span>
                                 </div>
                             )
                         })

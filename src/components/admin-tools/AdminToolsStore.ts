@@ -7,6 +7,7 @@ import {autobind} from "core-decorators";
 import {ICategory} from "../../services/transport/interfaces/catalog/ICategory";
 import {IMessage} from "../../services/transport/interfaces/other/IMessage";
 import { Subject } from "rxjs";
+import {IPurchaseHistory} from "../../services/transport/interfaces/user/IPurchaseHistory";
 
 @autobind
 export class AdminToolsStore {
@@ -20,6 +21,7 @@ export class AdminToolsStore {
     @observable count = "";
     @observable companyOptions: OptionValue[] = [];
     @observable categoryOptions: OptionValue[] = [];
+    @observable purchaseHistory: IPurchaseHistory[] = [];
     readonly getList$ = new Subject<string>();
 
     onChangeCompany(value: OptionValue): void {
@@ -60,9 +62,18 @@ export class AdminToolsStore {
         this.getList$.next("category");
     }
 
+    onSuccessGetAllPurchaseHistory(response: AxiosResponse<IPurchaseHistory[]>): void {
+        console.log(response);
+        this.purchaseHistory = response.data;
+    }
+
     onSuccessAddProduct(response: AxiosResponse<IMessage>): void {
         console.log("onSuccessAddProduct", response);
         this.productId = response.data.id;
+    }
+
+    onSuccessCancelOrder(response: AxiosResponse<IMessage>): void {
+        console.log("onSuccessCancelOrder", response);
     }
 
     setImage(event: React.ChangeEvent<HTMLInputElement>): void {
